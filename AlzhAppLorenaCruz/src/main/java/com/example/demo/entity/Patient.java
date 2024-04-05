@@ -51,6 +51,7 @@ public class Patient {
 	private boolean deleted;
 
 	//unidad familiar de tipo unidad familiar
+	
 	@Override
 	public String toString() {
 		return "Patient [id=" + id + ", name=" + name + ", lastname=" + lastname + ", birthdate=" + birthdate
