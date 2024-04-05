@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -9,6 +10,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -50,8 +56,23 @@ public class Patient {
 	private boolean enabled;
 	private boolean deleted;
 
-	//unidad familiar de tipo unidad familiar
-	
+	@ManyToMany(mappedBy = "patientsCare")
+    private List<Carer> carersCare;
+
+	@OneToOne
+	@JoinColumn(name = "family_unit_id")
+	private FamilyUnit familyUnit;
+
+	@ManyToMany
+	@JoinTable(name = "patient_medicine", joinColumns = @JoinColumn(name = "patient_id"), inverseJoinColumns = @JoinColumn(name = "medicine_id"))
+	private List<Medicine> medicines;
+
+	@OneToMany(mappedBy = "patient")
+	private List<Event> events;
+
+	@OneToMany(mappedBy = "patient")
+	private List<Symptom> symptoms;
+
 	@Override
 	public String toString() {
 		return "Patient [id=" + id + ", name=" + name + ", lastname=" + lastname + ", birthdate=" + birthdate

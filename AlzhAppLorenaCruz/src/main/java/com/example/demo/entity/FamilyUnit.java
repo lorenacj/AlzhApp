@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,8 +22,7 @@ public class FamilyUnit {
 	@NotBlank(message = "Access code can not be empty")
 	private String code;
 
-//	String[] members = new String[0]; -->no
-	// Lista de cuidadores
-	// paciente
+	@OneToOne(mappedBy = "familyunit")
+	private Patient patient;
 
 }

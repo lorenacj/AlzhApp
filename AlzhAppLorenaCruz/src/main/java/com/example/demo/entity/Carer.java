@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Column;
@@ -7,8 +9,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,8 +51,19 @@ public class Carer {
 	private String token;
 	private boolean enabled;
 	private boolean deleted;
-	
-	//lista de unidades familiares
+
+	// Relations
+	@ManyToMany
+	@JoinTable(name = "carer_patient", joinColumns = @JoinColumn(name = "carer_id"), inverseJoinColumns = @JoinColumn(name = "patient_id"))
+	private List<Patient> patientsCare;
+
+	@ManyToMany
+	@JoinTable(name = "carer_family_unit", joinColumns = @JoinColumn(name = "carer_id"), inverseJoinColumns = @JoinColumn(name = "family_unit_id"))
+	private List<FamilyUnit> familyUnit;
+
+	@ManyToMany
+	@JoinTable(name = "carer_medicine", joinColumns = @JoinColumn(name = "carer_id"), inverseJoinColumns = @JoinColumn(name = "medicine_id"))
+	private List<Medicine> medicines;
 
 	@Override
 	public String toString() {

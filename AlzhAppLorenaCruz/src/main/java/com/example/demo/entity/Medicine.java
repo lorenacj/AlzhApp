@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -9,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -32,7 +32,7 @@ public class Medicine {
 
 	@NotBlank(message = "Use can not be empty")
 	@Length(min = 5, max = 100, message = "Use length must be between 5 and 100 characters")
-	private String use;
+	private String usage;
 
 	@NotNull(message = "This field can not be empty. Enter how many hours the medication is taken.")
 	private int howoften;
@@ -42,10 +42,16 @@ public class Medicine {
 
 	private boolean deleted;
 
+	@ManyToMany(mappedBy = "medicamentos")
+	private List<Carer> carers;
+
+	@ManyToMany(mappedBy = "medicamentos")
+	private List<Patient> patients;
+
 	@Override
 	public String toString() {
-		return "Medicine [id=" + id + ", name=" + name + ", description=" + description + ", use=" + use + ", howoften="
-				+ howoften + ", howmanydays=" + howmanydays + ", deleted=" + deleted + "]";
+		return "Medicine [id=" + id + ", name=" + name + ", description=" + description + ", usage=" + usage
+				+ ", howoften=" + howoften + ", howmanydays=" + howmanydays + ", deleted=" + deleted + "]";
 	}
 
 }

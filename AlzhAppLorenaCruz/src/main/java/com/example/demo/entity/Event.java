@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -51,4 +53,8 @@ public class Event {
 
 	@NotNull(message = "Final hour can not be null")
 	private Time finalhour;
+
+	@ManyToOne
+	@JoinColumn(name = "patient_id")
+	private Patient patient;
 }
