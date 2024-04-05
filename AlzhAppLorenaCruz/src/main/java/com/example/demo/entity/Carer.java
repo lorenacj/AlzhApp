@@ -47,6 +47,8 @@ public class Carer {
 	private String token;
 	private boolean enabled;
 	private boolean deleted;
+	
+	//lista de unidades familiares
 
 	@Override
 	public String toString() {
