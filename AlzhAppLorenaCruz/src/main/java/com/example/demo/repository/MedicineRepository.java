@@ -10,5 +10,6 @@ import com.example.demo.entity.Medicine;
 @Repository("MedicineRepository")
 
 public interface MedicineRepository extends JpaRepository<Medicine, Serializable> {
+	public abstract Medicine findById(int id);
 
 }

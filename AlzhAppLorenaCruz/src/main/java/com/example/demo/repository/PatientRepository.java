@@ -10,5 +10,5 @@ import com.example.demo.entity.Patient;
 @Repository("PatientRepository")
 
 public interface PatientRepository extends JpaRepository<Patient, Serializable> {
-
+	public abstract Patient findById(int id);
 }

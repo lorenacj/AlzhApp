@@ -9,5 +9,5 @@ import com.example.demo.entity.FamilyUnit;
 
 @Repository("FamilyUnitRepository")
 public interface FamilyUnitRepository extends JpaRepository<FamilyUnit, Serializable> {
-
+	public abstract FamilyUnit findById(int id);
 }
