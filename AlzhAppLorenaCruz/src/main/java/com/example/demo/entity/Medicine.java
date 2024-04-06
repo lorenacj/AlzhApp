@@ -42,10 +42,10 @@ public class Medicine {
 
 	private boolean deleted;
 
-	@ManyToMany(mappedBy = "medicamentos")
+	@ManyToMany(mappedBy = "medicines")
 	private List<Carer> carers;
 
-	@ManyToMany(mappedBy = "medicamentos")
+	@ManyToMany(mappedBy = "medicines")
 	private List<Patient> patients;
 
 	@Override

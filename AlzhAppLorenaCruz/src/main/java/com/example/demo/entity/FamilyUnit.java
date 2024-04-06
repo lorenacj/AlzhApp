@@ -22,7 +22,7 @@ public class FamilyUnit {
 	@NotBlank(message = "Access code can not be empty")
 	private String code;
 
-	@OneToOne(mappedBy = "familyunit")
+	@OneToOne(mappedBy = "familyUnit")
 	private Patient patient;
 
 }
