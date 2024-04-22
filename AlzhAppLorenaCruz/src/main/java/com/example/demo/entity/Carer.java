@@ -30,14 +30,14 @@ public class Carer {
 	private String name;
 
 	@NotBlank(message = "Last name can not be empty")
-	@Length(min = 5, max = 50, message = "Lastname length must be between 5 and 50 characters")
+	@Length(min = 2, max = 50, message = "Lastname length must be between 5 and 50 characters")
 	private String lastname;
 
-	@NotBlank(message = "Telephone can not be empty")
-	@Pattern(regexp = "^[1-9]\\d{8}$", message = "Invalid format, enter a number with 9 digits")
+//	@NotBlank(message = "Telephone can not be empty")
+//	@Pattern(regexp = "^[1-9]\\d{8}$", message = "Invalid format, enter a number with 9 digits")
 	private String telephone;
 
-	@NotBlank(message = "Role can not be null")
+//	@NotBlank(message = "Role can not be null")
 	private String role;
 
 	// Username will be passport number
@@ -46,7 +46,7 @@ public class Carer {
 	@Pattern(regexp = "\\d{8}[A-HJ-NP-TV-Z]")
 	private String username;
 	@NotBlank(message = "Password can not be empty")
-	@Length(min = 5, max = 50, message = "Password length have to be between 5 and 50")
+//	@Length(min = 5, max = 50, message = "Password length have to be between 5 and 50")
 	private String password;
 	private String token;
 	private boolean enabled;

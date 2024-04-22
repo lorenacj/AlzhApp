@@ -27,6 +27,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 
+
 @RestController
 public class CarerController {
 	@Autowired
@@ -36,57 +37,57 @@ public class CarerController {
 	@Autowired
 	private AuthenticationManager authManager;
 	
-//	@PostMapping("/login")
-//	public ResponseEntity<?> login(@RequestParam("username") String username, @RequestParam("password") String pwd) {
-//	    Carer carer = carerService.findByPID(username);
-//	    if (carer != null && carerService.checkPassword(pwd, carer.getPassword())) {
-//	        String token = getJWTToken(carer.getUsername(), carer.getRole());
-//	        carer.setToken(token);
-//	        carer.setPassword(null);
-//	        return ResponseEntity.ok(carer);
-//	    } else {
-//	    	//especificar si es una u otra
-//	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("ID passport or password is incorrect");
-//	    }
-//	}
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestParam("username") String username, @RequestParam("password") String pwd) {
+	    Carer carer = carerService.findByPID(username);
+	    if (carer != null && carerService.checkPassword(pwd, carer.getPassword())) {
+	        String token = getJWTToken(carer.getUsername(), carer.getRole());
+	        carer.setToken(token);
+	        carer.setPassword(null);
+	        return ResponseEntity.ok(carer);
+	    } else {
+	    	//especificar si es una u otra
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("ID passport or password is incorrect");
+	    }
+	}
 
 	@PostMapping("/register")
 	public Carer registerCarer(@RequestBody CarerModel carer) {
 		return carerService.register(carer);
 	}
 
-//	
-//	private String getJWTToken(String username, String role) {
-//		String SECRET_KEY = "mySecretKey";
-//		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(role);
-//
-//		String token = Jwts.builder().setId("softtekJWT").setSubject(username)
-//				.claim("authorities",
-//						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-//				.setIssuedAt(new Date(System.currentTimeMillis()))
-//				.setExpiration(new Date(System.currentTimeMillis() + 600_000))
-//				.signWith(SignatureAlgorithm.HS512, SECRET_KEY.getBytes()).compact();
-//
-//		return "Bearer " + token;
-//	}
-//	
-//	public Claims parseToken(String token) {
-//		final String SECRET_KEY = "mySecretKey";
-//		token = token.replace("Bearer ", "");
-//		try {
-//			Claims claims = Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(token).getBody();
-//
-//			// String role = claims.get("role", String.class);
-//
-//			return claims;
-//		} catch (ExpiredJwtException e) {
-//			// Manejar la excepción de token expirado
-//			e.printStackTrace();
-//		} catch (MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
-//			// Manejar otras excepciones de token no válido
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//	
+	
+	private String getJWTToken(String username, String role) {
+		String SECRET_KEY = "mySecretKey";
+		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(role);
+
+		String token = Jwts.builder().setId("softtekJWT").setSubject(username)
+				.claim("authorities",
+						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+				.setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + 600_000))
+				.signWith(SignatureAlgorithm.HS512, SECRET_KEY.getBytes()).compact();
+
+		return "Bearer " + token;
+	}
+	
+	public Claims parseToken(String token) {
+		final String SECRET_KEY = "mySecretKey";
+		token = token.replace("Bearer ", "");
+		try {
+			Claims claims = Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(token).getBody();
+
+			// String role = claims.get("role", String.class);
+
+			return claims;
+		} catch (ExpiredJwtException e) {
+			// Manejar la excepción de token expirado
+			e.printStackTrace();
+		} catch (MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
+			// Manejar otras excepciones de token no válido
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

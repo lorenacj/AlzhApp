@@ -35,11 +35,13 @@ public class CarerServiceImpl implements CarerService {
 	}
 
 	// puedes seleccionar role
-	@Override
-	public Carer addCarer(CarerModel carerModel) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	  public Carer addCarer(CarerModel carerModel) {
+	        // Implementa la lógica para añadir un cuidador
+	        Carer carer = transformCarer(carerModel);
+	        carer.setPassword(carerpasswordEncoder.encode(carer.getPassword()));
+	        carer.setRole("ROLE_CARER");
+	        return carerRepository.save(carer);
+	    }
 
 	@Override
 	public int removeCarer(int id) {
