@@ -11,10 +11,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Carer;
 import com.example.demo.model.CarerModel;
@@ -27,7 +31,6 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 
-
 @RestController
 public class CarerController {
 	@Autowired
@@ -36,19 +39,21 @@ public class CarerController {
 
 	@Autowired
 	private AuthenticationManager authManager;
-	
+
+	private static final String CRUDCARER_VIEW = "crudcarer";
+
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestParam("username") String username, @RequestParam("password") String pwd) {
-	    Carer carer = carerService.findByPID(username);
-	    if (carer != null && carerService.checkPassword(pwd, carer.getPassword())) {
-	        String token = getJWTToken(carer.getUsername(), carer.getRole());
-	        carer.setToken(token);
-	        carer.setPassword(null);
-	        return ResponseEntity.ok(carer);
-	    } else {
-	    	//especificar si es una u otra
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("ID passport or password is incorrect");
-	    }
+		Carer carer = carerService.findByPID(username);
+		if (carer != null && carerService.checkPassword(pwd, carer.getPassword())) {
+			String token = getJWTToken(carer.getUsername(), carer.getRole());
+			carer.setToken(token);
+			carer.setPassword(null);
+			return ResponseEntity.ok(carer);
+		} else {
+			// especificar si es una u otra
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("ID passport or password is incorrect");
+		}
 	}
 
 	@PostMapping("/register")
@@ -56,7 +61,6 @@ public class CarerController {
 		return carerService.register(carer);
 	}
 
-	
 	private String getJWTToken(String username, String role) {
 		String SECRET_KEY = "mySecretKey";
 		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(role);
@@ -70,7 +74,7 @@ public class CarerController {
 
 		return "Bearer " + token;
 	}
-	
+
 	public Claims parseToken(String token) {
 		final String SECRET_KEY = "mySecretKey";
 		token = token.replace("Bearer ", "");
@@ -89,5 +93,29 @@ public class CarerController {
 		}
 		return null;
 	}
-	
+
+	@GetMapping("/administration/crud/carer")
+	public ModelAndView Crudindex() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String userName;
+		if (principal instanceof UserDetails) {
+			UserDetails userDetails = (UserDetails) principal;
+			userName = userDetails.getUsername();
+		} else if (principal instanceof String) {
+			userName = (String) principal;
+		} else {
+			userName = "Nombre de usuario desconocido";
+		}
+		List<CarerModel> carers = carerService.listAllCarer();
+//		List<FamiliaprofesionalModel> familias = familiaProfesionalService.listAllFamiliasProfesionales();
+//		String userName = asimpl.sacarnombreusuario();
+
+		ModelAndView mav = new ModelAndView(CRUDCARER_VIEW);
+		mav.addObject("usuario", userName);
+//		mav.addObject("alumnos", alumnos);
+//		mav.addObject("familias", familias);
+		mav.addObject("carers", carers);
+		return mav;
+	}
+
 }
