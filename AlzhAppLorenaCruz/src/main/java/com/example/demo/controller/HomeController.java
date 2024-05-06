@@ -13,6 +13,7 @@ public class HomeController {
 
 	private static final String HOME_VIEW = "home";
 	private static final String CRUD_VIEW = "crudcarer";
+	
 
 	@GetMapping("/")
 	public String redirect() {

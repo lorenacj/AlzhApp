@@ -35,6 +35,7 @@ public class Carer {
 
 //	@NotBlank(message = "Telephone can not be empty")
 //	@Pattern(regexp = "^[1-9]\\d{8}$", message = "Invalid format, enter a number with 9 digits")
+	@Column(name = "telephone")
 	private String telephone;
 
 //	@NotBlank(message = "Role can not be null")
@@ -43,7 +44,7 @@ public class Carer {
 	// Username will be passport number
 	@Column(unique = true)
 	@NotBlank(message = "User can not be empty, please enter your passport ID")
-	@Pattern(regexp = "\\d{8}[A-HJ-NP-TV-Z]")
+	@Pattern(regexp = "\\d{8}[A-Z]")
 	private String username;
 	@NotBlank(message = "Password can not be empty")
 //	@Length(min = 5, max = 50, message = "Password length have to be between 5 and 50")

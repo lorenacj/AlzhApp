@@ -1,6 +1,7 @@
 package com.example.demo.serviceimpl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,13 @@ public class CarerServiceImpl implements CarerService {
 
 	@Override
 	public List<CarerModel> listAllCarer() {
-		// TODO Auto-generated method stub
-		return null;
+		
+			ModelMapper modelMapper = new ModelMapper();
+
+			List<Carer> empresasList = carerRepository.findAll();
+			return empresasList.stream().map(empresa -> modelMapper.map(empresa, CarerModel.class))
+					.collect(Collectors.toList());
+
 	}
 
 	// puedes seleccionar role
@@ -45,8 +51,8 @@ public class CarerServiceImpl implements CarerService {
 
 	@Override
 	public int removeCarer(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		carerRepository.deleteById(id);
+		return id;
 	}
 
 	@Override
@@ -56,14 +62,13 @@ public class CarerServiceImpl implements CarerService {
 	}
 
 	@Override
-	public Carer findByPID(String passportID) {
-		// TODO Auto-generated method stub
-		return null;
+	public Carer findByUsername(String passportID) {
+		return carerRepository.findByUsername(passportID);
 	}
 
 	@Override
 	public CarerModel findCarerByPatient(Patient patient) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

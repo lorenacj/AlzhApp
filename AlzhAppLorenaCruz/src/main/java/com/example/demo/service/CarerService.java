@@ -18,7 +18,7 @@ public interface CarerService {
 
 	public abstract Carer updateCarer(CarerModel carerModel);
 
-	public abstract Carer findByPID(String passportID);
+//	public abstract Carer findByPID(int passportID);
 
 	public abstract boolean checkPassword(String rawPassword, String encodedPassword);
 
@@ -30,5 +30,7 @@ public interface CarerService {
 	public abstract Carer transformCarer(CarerModel carerModel);
 
 	public abstract CarerModel transformCarer(Carer carer);
+
+	public abstract Carer findByUsername(String passportID);
 
 }

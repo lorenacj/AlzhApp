@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,6 +33,7 @@ public class Medicine {
 
 	@NotBlank(message = "Use can not be empty")
 	@Length(min = 5, max = 100, message = "Use length must be between 5 and 100 characters")
+	@Column(name = "\"usage\"") // Escapar el nombre de la columna
 	private String usage;
 
 	@NotNull(message = "This field can not be empty. Enter how many hours the medication is taken.")

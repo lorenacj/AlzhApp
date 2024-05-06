@@ -42,9 +42,9 @@ public class CarerController {
 
 	private static final String CRUDCARER_VIEW = "crudcarer";
 
-	@PostMapping("/login")
+	@PostMapping("/api/login")
 	public ResponseEntity<?> login(@RequestParam("username") String username, @RequestParam("password") String pwd) {
-		Carer carer = carerService.findByPID(username);
+		Carer carer = carerService.findByUsername(username);
 		if (carer != null && carerService.checkPassword(pwd, carer.getPassword())) {
 			String token = getJWTToken(carer.getUsername(), carer.getRole());
 			carer.setToken(token);
@@ -56,9 +56,19 @@ public class CarerController {
 		}
 	}
 
-	@PostMapping("/register")
-	public Carer registerCarer(@RequestBody CarerModel carer) {
-		return carerService.register(carer);
+	@PostMapping("/api/register")
+	public ResponseEntity<?>  registerCarer(@RequestBody CarerModel carer) {
+		// Comprobar si el username está bien formateado
+	    if (carer.getUsername().length()!=9) {
+	        return ResponseEntity.badRequest().body("El username no está bien formateado.");
+	    }
+	    
+	    // Comprobar si el username ya está registrado
+	    if (carerService.findByUsername(carer.getUsername())!=null) {
+	        return ResponseEntity.badRequest().body("El username ya está registrado.");
+	    }
+	    Carer registeredCarer = carerService.register(carer);
+	    return ResponseEntity.ok(registeredCarer);
 	}
 
 	private String getJWTToken(String username, String role) {
