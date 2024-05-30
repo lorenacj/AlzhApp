@@ -19,15 +19,15 @@ jobs:
           java-version: '17'
 
       - name: Build with Maven
-        run:  |
-          cd /Documents/GitHub/AlzhApp/AlzhAppLorenaCruz
+        run: |
+          cd /home/runner/work/AlzhApp/AlzhApp/AlzhAppLorenaCruz
           mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: /AlzhAppLorenaCruz/target/*.jar
+          path: '/home/runner/work/AlzhApp/AlzhApp/AlzhAppLorenaCruz/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
