@@ -40,20 +40,32 @@
 								th:if="${carer.name != 'Null'}">
 								<td th:text="${carer.name}"></td>
 								<td th:text="${carer.lastname}"></td>
+								<td th:text="${carer.telephone}"></td>
 								<td th:text="${carer.username}"></td>
+								
 								<!-- <td class="id-familia" th:each="familia : ${familias}"
 									th:if="${familia.id == alumno.idFamilia}" th:text="${familia.nombre}"
 									style="white-space: nowrap;"></td>
 								</td> -->
 								<td>
-									<span th:if="${alumno.isEnabled()}">
-										<img src="../static/imgs/tickverde.png" th:src="@{/imgs/tickverde.png}"
-											width="25" height="25" style="border-radius: 10px;">
-									</span>
-									<span th:if="${!alumno.isEnabled()}">
-										<img src="../static/imgs/cruzroja.png" th:src="@{/imgs/cruzroja.png}" width="35"
-											height="35" style="border-radius: 10px;">
-									</span>
+									
+								</td>
+								<td>
+									<!--  <span th:if="${carer.deleted}">
+								        <img th:src="@{/imgs/tickverde.png}" width="35" height="35" style="border-radius: 10px;">
+								    </span>
+								    <span th:unless="${carer.deleted}">
+								        <img th:src="@{/imgs/cruzroja.png}" width="35" height="35" style="border-radius: 10px;">
+								    </span>
+								    -->
+								</td>
+								<td>
+								    <span th:if="${carer.enabled}">
+								        <img th:src="@{/imgs/tickverde.png}" width="35" height="35" style="border-radius: 10px;">
+								    </span>
+								    <span th:unless="${carer.enabled}">
+								        <img th:src="@{/imgs/cruzroja.png}" width="35" height="35" style="border-radius: 10px;">
+								    </span>
 								</td>
 								<td class="acciones">
 

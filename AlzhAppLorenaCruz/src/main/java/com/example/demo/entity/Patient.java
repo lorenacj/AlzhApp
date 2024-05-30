@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -50,13 +52,14 @@ public class Patient {
 
 	@Column(unique = true)
 	@NotBlank(message = "Passport id can not be empty")
-	@Pattern(regexp = "\\d{8}[A-HJ-NP-TV-Z]")
+	@Pattern(regexp = "\\d{8}[A-Z]")
 	private String passportid;
 	// administration
 	private boolean enabled;
 	private boolean deleted;
 
 	@ManyToMany(mappedBy = "patientsCare")
+    @JsonIgnore
     private List<Carer> carersCare;
 
 	@OneToOne

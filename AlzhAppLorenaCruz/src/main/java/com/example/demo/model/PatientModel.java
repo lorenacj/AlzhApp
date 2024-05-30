@@ -3,6 +3,16 @@ package com.example.demo.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.example.demo.entity.Carer;
+import com.example.demo.entity.Event;
+import com.example.demo.entity.Medicine;
+import com.example.demo.entity.Symptom;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class PatientModel {
 	private int id;
 	private String name;
@@ -15,8 +25,8 @@ public class PatientModel {
 	private boolean enabled;
 	private boolean deleted;
 	private int familyUnitId;
-	private List<Integer> carerIds;
-	private List<Integer> medicineIds;
-	private List<Integer> eventIds;
-	private List<Integer> symptomIds;
+	private List<Carer> carerIds;
+	private List<Medicine> medicineIds;
+	private List<Event> eventIds;
+	private List<Symptom> symptomIds;
 }

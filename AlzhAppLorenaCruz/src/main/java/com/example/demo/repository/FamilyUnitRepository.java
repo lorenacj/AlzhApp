@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.FamilyUnit;
 
-@Repository("FamilyUnitRepository")
+@Repository("familyUnitRepository")
 public interface FamilyUnitRepository extends JpaRepository<FamilyUnit, Serializable> {
 	public abstract FamilyUnit findById(int id);
+	
+	public abstract FamilyUnit findByCode(String code);
 }

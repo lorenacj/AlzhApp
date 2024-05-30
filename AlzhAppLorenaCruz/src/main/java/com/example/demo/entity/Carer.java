@@ -33,7 +33,7 @@ public class Carer {
 	@Length(min = 2, max = 50, message = "Lastname length must be between 5 and 50 characters")
 	private String lastname;
 
-//	@NotBlank(message = "Telephone can not be empty")
+	@NotBlank(message = "Telephone can not be empty")
 //	@Pattern(regexp = "^[1-9]\\d{8}$", message = "Invalid format, enter a number with 9 digits")
 	@Column(name = "telephone")
 	private String telephone;

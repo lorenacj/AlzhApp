@@ -5,6 +5,8 @@ import java.sql.Time;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -43,18 +45,19 @@ public class Event {
 	private boolean deleted;
 
 	@NotNull(message = "Initial date can not be null")
-	private Date initialdate;
+	private Date initialDate;
 
 	@NotNull(message = "Final date can not be null")
-	private Date finaldate;
+	private Date finalDate;
 
 	@NotNull(message = "Inital hour can not be null")
-	private Time initialhour;
+	private Time initialHour;
 
 	@NotNull(message = "Final hour can not be null")
-	private Time finalhour;
+	private Time finalHour;
 
 	@ManyToOne
 	@JoinColumn(name = "patient_id")
+	@JsonIgnore
 	private Patient patient;
 }

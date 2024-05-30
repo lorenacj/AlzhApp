@@ -5,6 +5,8 @@ import java.sql.Time;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -40,5 +42,6 @@ public class Symptom {
 
 	@ManyToOne
 	@JoinColumn(name = "patient_id")
+	@JsonIgnore
 	private Patient patient;
 }

@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Carer;
+import com.example.demo.entity.FamilyUnit;
 import com.example.demo.entity.Patient;
 import com.example.demo.model.CarerModel;
 import com.example.demo.repository.CarerRepository;
@@ -34,8 +35,8 @@ public class CarerServiceImpl implements CarerService {
 		
 			ModelMapper modelMapper = new ModelMapper();
 
-			List<Carer> empresasList = carerRepository.findAll();
-			return empresasList.stream().map(empresa -> modelMapper.map(empresa, CarerModel.class))
+			List<Carer> carerList = carerRepository.findAll();
+			return carerList.stream().map(carer -> modelMapper.map(carer, CarerModel.class))
 					.collect(Collectors.toList());
 
 	}
@@ -46,6 +47,7 @@ public class CarerServiceImpl implements CarerService {
 	        Carer carer = transformCarer(carerModel);
 	        carer.setPassword(carerpasswordEncoder.encode(carer.getPassword()));
 	        carer.setRole("ROLE_CARER");
+	        
 	        return carerRepository.save(carer);
 	    }
 
@@ -108,7 +110,10 @@ public class CarerServiceImpl implements CarerService {
 		Carer carer = transformCarer(carerModel);
 		carer.setPassword(carerpasswordEncoder().encode(carer.getPassword()));
 		carer.setRole("ROLE_CARER");
-
+		List<Patient> patients = null;
+		carer.setPatientsCare(patients);
+		List<FamilyUnit> family=null;
+		carer.setFamilyUnit(family);
 		return carerRepository.save(carer);
 	}
 

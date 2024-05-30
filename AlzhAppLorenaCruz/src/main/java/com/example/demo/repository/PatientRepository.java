@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.Patient;
 
-@Repository("PatientRepository")
+@Repository("patientRepository")
 
 public interface PatientRepository extends JpaRepository<Patient, Serializable> {
 	public abstract Patient findById(int id);

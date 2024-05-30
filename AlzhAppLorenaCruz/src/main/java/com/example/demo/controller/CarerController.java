@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,8 +36,8 @@ public class CarerController {
 	@Qualifier("carerService")
 	private CarerService carerService;
 
-	@Autowired
-	private AuthenticationManager authManager;
+//	@Autowired
+//	private AuthenticationManager authManager;
 
 	private static final String CRUDCARER_VIEW = "crudcarer";
 

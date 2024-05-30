@@ -2,6 +2,9 @@ package com.example.demo.model;
 
 import java.util.List;
 
+import com.example.demo.entity.Carer;
+import com.example.demo.entity.Patient;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,9 +15,9 @@ public class MedicineModel {
 	private String name;
 	private String description;
 	private String usage;
-	private int howOften;
-	private int howManyDays;
+	private int howoften;
+	private int howmanydays;
 	private boolean deleted;
-	private List<Integer> carerIds;
-	private List<Integer> patientIds;
+	private List<Carer> carers;
+	private List<Patient> patients;
 }
