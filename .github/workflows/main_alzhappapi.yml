@@ -17,14 +17,14 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Java version
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3 # Actualiza a la versión más reciente
         with:
-          java-version: '21'
+          java-version: '17'
           distribution: 'temurin'
 
       - name: Build with Maven
         run: mvn clean install
-        working-directory: ./AlzhAppLorenaCruz # Especifica el directorio donde se encuentra tu pom.xml
+        working-directory: ./AlzhAppLorenaCruz # Asegúrate de que este es el directorio correcto
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -39,7 +39,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
   
     steps:
       - name: Download artifact from build job
