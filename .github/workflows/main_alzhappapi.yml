@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: './AlzhAppLorenaCruz/target/*.jar' # Asegúrate de que la ruta es correcta
+          path: AlzhAppLorenaCruz/target/*.jar # Asegúrate de que la ruta es correcta
 
   deploy:
     runs-on: ubuntu-latest
