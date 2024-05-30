@@ -19,8 +19,9 @@ jobs:
           java-version: '17'
 
       - name: Build with Maven
-        run: mvn clean install
-	working-directory: ./AlzhAppLorenaCruz
+        run:  |
+          cd /Documents/GitHub/AlzhApp/AlzhAppLorenaCruz
+          mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
