@@ -23,7 +23,7 @@ jobs:
 
       - name: Build with Maven
         run: |
-          cd /home/runner/work/AlzhApp/AlzhApp/AlzhAppLorenaCruz
+          cd /home/runner/work/AlzhApp/AlzhAppLorenaCruz
           mvn clean install
 
       - name: Upload artifact for deployment job
