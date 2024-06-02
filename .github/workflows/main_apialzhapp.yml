@@ -58,7 +58,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'apialzhapp'
+          app-name: 'apialzhappapi'
           slot-name: 'Production'
           package: '*.jar'
           
