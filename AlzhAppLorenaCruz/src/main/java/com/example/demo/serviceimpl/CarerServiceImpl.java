@@ -32,24 +32,23 @@ public class CarerServiceImpl implements CarerService {
 
 	@Override
 	public List<CarerModel> listAllCarer() {
-		
-			ModelMapper modelMapper = new ModelMapper();
 
-			List<Carer> carerList = carerRepository.findAll();
-			return carerList.stream().map(carer -> modelMapper.map(carer, CarerModel.class))
-					.collect(Collectors.toList());
+		ModelMapper modelMapper = new ModelMapper();
+
+		List<Carer> carerList = carerRepository.findAll();
+		return carerList.stream().map(carer -> modelMapper.map(carer, CarerModel.class)).collect(Collectors.toList());
 
 	}
 
 	// puedes seleccionar role
-	  public Carer addCarer(CarerModel carerModel) {
-	        // Implementa la lógica para añadir un cuidador
-	        Carer carer = transformCarer(carerModel);
-	        carer.setPassword(carerpasswordEncoder.encode(carer.getPassword()));
-	        carer.setRole("ROLE_CARER");
-	        
-	        return carerRepository.save(carer);
-	    }
+	public Carer addCarer(CarerModel carerModel) {
+		// Implementa la lógica para añadir un cuidador
+		Carer carer = transformCarer(carerModel);
+		carer.setPassword(carerpasswordEncoder.encode(carer.getPassword()));
+		carer.setRole("ROLE_ADMIN");
+
+		return carerRepository.save(carer);
+	}
 
 	@Override
 	public int removeCarer(int id) {
@@ -70,7 +69,7 @@ public class CarerServiceImpl implements CarerService {
 
 	@Override
 	public CarerModel findCarerByPatient(Patient patient) {
-		
+
 		return null;
 	}
 
@@ -88,6 +87,17 @@ public class CarerServiceImpl implements CarerService {
 
 		ModelMapper modelMapper = new ModelMapper();
 		return modelMapper.map(carerModel, Carer.class);
+	}
+
+	@Override
+	public Carer getCarerById(Long id) {
+	    List<CarerModel> carers = listAllCarer();
+	    for (CarerModel carer : carers) {
+	        if (carer.getId()==id) {
+	            return transformCarer(carer);
+	        }
+	    }
+	    return null;
 	}
 
 	@Override
@@ -112,7 +122,7 @@ public class CarerServiceImpl implements CarerService {
 		carer.setRole("ROLE_CARER");
 		List<Patient> patients = null;
 		carer.setPatientsCare(patients);
-		List<FamilyUnit> family=null;
+		List<FamilyUnit> family = null;
 		carer.setFamilyUnit(family);
 		return carerRepository.save(carer);
 	}

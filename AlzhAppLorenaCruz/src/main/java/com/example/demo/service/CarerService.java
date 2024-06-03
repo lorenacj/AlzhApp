@@ -33,4 +33,6 @@ public interface CarerService {
 
 	public abstract Carer findByUsername(String passportID);
 
+	public abstract Carer getCarerById(Long id);
+
 }
