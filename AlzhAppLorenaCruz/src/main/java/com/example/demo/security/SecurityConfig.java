@@ -15,6 +15,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests(authorizeRequests -> authorizeRequests
@@ -22,18 +27,13 @@ public class SecurityConfig {
                 )
             .formLogin(formLogin -> formLogin
                 .loginPage("/auth/login")
-                .defaultSuccessUrl("/carers", true)
+                .defaultSuccessUrl("/home/index")
                 .permitAll())
             .logout(logout -> logout
-                .logoutUrl("/logout")
+                .logoutUrl("/auth/logout")
                 .logoutSuccessUrl("/auth/login?logout")
                 .permitAll());
         return http.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Bean

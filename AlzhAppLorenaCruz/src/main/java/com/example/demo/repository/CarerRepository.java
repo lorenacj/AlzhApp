@@ -10,5 +10,5 @@ import com.example.demo.entity.Carer;
 @Repository("carerRepository")
 public interface CarerRepository extends JpaRepository<Carer, Serializable> {
 	public abstract Carer findById(int id);
-	public abstract Carer findByUsername(String passportID);
+	public abstract Carer findByUsername(String username);
 }

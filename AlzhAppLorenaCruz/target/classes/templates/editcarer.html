@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Edit Carer</title>
+	<link th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container mt-5">
+		<h1>Edit Carer</h1>
+		<form th:action="@{/carers/edit/{id}(id=${carer.id})}" th:object="${carer}" method="post">
+			<div class="form-group">
+				<label for="name">Name:</label>
+				<input type="text" id="name" th:field="*{name}" class="form-control" />
+				<div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+			</div>
+			<div class="form-group">
+				<label for="lastname">Last Name:</label>
+				<input type="text" id="lastname" th:field="*{lastname}" class="form-control" />
+				<div class="text-danger" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></div>
+			</div>
+			<div class="form-group">
+				<label for="telephone">Telephone:</label>
+				<input type="text" id="telephone" th:field="*{telephone}" class="form-control" />
+				<div class="text-danger" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></div>
+			</div>
+			<div class="form-group">
+				<label for="username">ID Passport:</label>
+				<input type="text" id="username" th:field="*{username}" class="form-control" />
+				<div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+			</div>
+			<div class="form-group">
+				<label for="password">Password:</label>
+				<input type="password" id="password" th:field="*{password}" class="form-control" />
+				<div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+			</div>
+			<div class="form-group">
+				<label for="role">Role:</label>
+				<input type="text" id="role" th:field="*{role}" class="form-control" />
+				<div class="text-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
+			</div>
+			<div class="form-group mt-3">
+				<button type="submit" class="btn btn-success">Save</button>
+				<a href="/carers" class="btn btn-secondary">Cancel</a>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>

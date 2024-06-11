@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient List</title>
+    <link th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+    <h1>Patient List</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Lastname</th>
+                <th>Birthdate</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Disorder</th>
+                <th>Passport ID</th>
+                <th>Actions</th>
+                <th>Mostrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="patient : ${patients}">
+                <td th:text="${patient.name}"></td>
+                <td th:text="${patient.lastname}"></td>
+                <td th:text="${patient.birthdate}"></td>
+                <td th:text="${patient.height}"></td>
+                <td th:text="${patient.weight}"></td>
+                <td th:text="${patient.disorder}"></td>
+                <td th:text="${patient.passportid}"></td>
+                <td>
+                    <a th:href="@{/admin/patients/edit/{id}(id=${patient.id})}" class="btn btn-primary">Edit</a>
+                    <a th:href="@{/admin/patients/delete/{id}(id=${patient.id})}" class="btn btn-danger">Delete</a>
+<!--                    <a th:href="@{/admin/patients/enable/{id}(id=${patient.id})}" class="btn btn-info">Act/desc</a>-->
+                </td>
+                <td>
+<!--					<a th:href="@{/admin/patients/enable/{id}(id=${patient.id})}" class="btn btn-info">Act/desc</a>-->
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/admin/patients/new" class="btn btn-success">Add New Patient</a>
+</body>
+</html>

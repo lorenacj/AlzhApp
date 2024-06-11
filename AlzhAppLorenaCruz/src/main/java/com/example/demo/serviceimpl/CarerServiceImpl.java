@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,35 +20,39 @@ import com.example.demo.model.CarerModel;
 import com.example.demo.repository.CarerRepository;
 import com.example.demo.service.CarerService;
 
+@Configuration
 @Service("carerService")
-public class CarerServiceImpl implements CarerService {
-	private PasswordEncoder carerpasswordEncoder;
+public class CarerServiceImpl implements CarerService, UserDetailsService {
 
-	@Autowired
-	@Qualifier("carerRepository")
-	private CarerRepository carerRepository;
+    @Autowired
+    @Qualifier("carerRepository")
+    private CarerRepository carerRepository;
 
-	public CarerServiceImpl() {
-		this.carerpasswordEncoder = new BCryptPasswordEncoder();
-	}
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Carer carer = carerRepository.findByUsername(username);
+        if (carer == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        return carer;
+    }
 
 	@Override
 	public List<CarerModel> listAllCarer() {
-
 		ModelMapper modelMapper = new ModelMapper();
-
 		List<Carer> carerList = carerRepository.findAll();
 		return carerList.stream().map(carer -> modelMapper.map(carer, CarerModel.class)).collect(Collectors.toList());
-
 	}
 
-	// puedes seleccionar role
-	public Carer addCarer(CarerModel carerModel) {
-		// Implementa la lógica para añadir un cuidador
+	public Carer addAdmin(CarerModel carerModel) {
 		Carer carer = transformCarer(carerModel);
-		carer.setPassword(carerpasswordEncoder.encode(carer.getPassword()));
+		carer.setPassword(passwordEncoder.encode(carer.getPassword()));
+		carer.setEnabled(true);
 		carer.setRole("ROLE_ADMIN");
-
+		System.out.println("CREADO");
 		return carerRepository.save(carer);
 	}
 
@@ -58,8 +64,9 @@ public class CarerServiceImpl implements CarerService {
 
 	@Override
 	public Carer updateCarer(CarerModel carerModel) {
-		// TODO Auto-generated method stub
-		return null;
+		Carer carer = transformCarer(carerModel);
+		carer.setPassword(passwordEncoder.encode(carer.getPassword()));
+		return carerRepository.save(carer);
 	}
 
 	@Override
@@ -69,13 +76,11 @@ public class CarerServiceImpl implements CarerService {
 
 	@Override
 	public CarerModel findCarerByPatient(Patient patient) {
-
 		return null;
 	}
 
 	@Override
 	public CarerModel findCarerByPatientPID(String patientPassportId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -84,20 +89,19 @@ public class CarerServiceImpl implements CarerService {
 		if (carerModel == null) {
 			return null;
 		}
-
 		ModelMapper modelMapper = new ModelMapper();
 		return modelMapper.map(carerModel, Carer.class);
 	}
 
 	@Override
 	public Carer getCarerById(Long id) {
-	    List<CarerModel> carers = listAllCarer();
-	    for (CarerModel carer : carers) {
-	        if (carer.getId()==id) {
-	            return transformCarer(carer);
-	        }
-	    }
-	    return null;
+		List<CarerModel> carers = listAllCarer();
+		for (CarerModel carer : carers) {
+			if (carer.getId() == id) {
+				return transformCarer(carer);
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -111,25 +115,34 @@ public class CarerServiceImpl implements CarerService {
 
 	@Override
 	public boolean checkPassword(String rawPassword, String encodedPassword) {
-		return carerpasswordEncoder.matches(rawPassword, encodedPassword);
+		return passwordEncoder.matches(rawPassword, encodedPassword);
 	}
 
-	// solo carer
 	@Override
 	public Carer register(CarerModel carerModel) {
 		Carer carer = transformCarer(carerModel);
-		carer.setPassword(carerpasswordEncoder().encode(carer.getPassword()));
+		carer.setPassword(passwordEncoder.encode(carer.getPassword()));
 		carer.setRole("ROLE_CARER");
 		List<Patient> patients = null;
 		carer.setPatientsCare(patients);
 		List<FamilyUnit> family = null;
+		carer.setEnabled(true);
 		carer.setFamilyUnit(family);
 		return carerRepository.save(carer);
 	}
 
-	@Bean
-	PasswordEncoder carerpasswordEncoder() {
-		return new BCryptPasswordEncoder();
+	@Override
+	public int enable(int id) {
+		Carer c=carerRepository.findById(id);
+		if(c.isEnabled()) {
+			c.setEnabled(false);
+			carerRepository.save(c);
+			return 0;
+		}else {
+			c.setEnabled(true);
+			carerRepository.save(c);
+			return 1;
+		}
 	}
-
+	
 }

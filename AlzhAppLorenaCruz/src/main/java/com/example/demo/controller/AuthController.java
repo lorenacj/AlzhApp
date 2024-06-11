@@ -29,17 +29,17 @@ public class AuthController {
 	private CarerService carerService;
 	
 	@GetMapping("/login")
-	public String login(Model model, @RequestParam(name = "error", required = false) String error, @RequestParam(name = "logout", required=false) String logout, HttpServletRequest request) {
-		model.addAttribute("carer", new Carer());
-		model.addAttribute("logout", logout);
-		model.addAttribute("error", error);
-		if (logout != null) {
-			model.addAttribute("logoutMessage", "¡Has cerrado sesión correctamente!");
-		}
-		
-		return LOGIN_VIEW;
-	}
-	
+    public String login(Model model, @RequestParam(name = "error", required = false) String error, @RequestParam(name = "logout", required = false) String logout, HttpServletRequest request) {
+        model.addAttribute("carer", new Carer());
+        model.addAttribute("logout", logout);
+        model.addAttribute("error", error);
+        if (logout != null) {
+            model.addAttribute("logoutMessage", "¡Has cerrado sesión correctamente!");
+        }
+        return LOGIN_VIEW;
+        
+    }
+
 	
 	@GetMapping("/registerForm")
 	public String registerForm(Model model) {
@@ -49,7 +49,8 @@ public class AuthController {
 	
 	@PostMapping("/register")
 	public String register(@ModelAttribute CarerModel carer, RedirectAttributes flash) {
-		carerService.register(carer);
+		carerService.addAdmin(carer);
+		
 		flash.addFlashAttribute("success", "Carer registrado correctamente!");
 		return "redirect:/auth/login";
 	}

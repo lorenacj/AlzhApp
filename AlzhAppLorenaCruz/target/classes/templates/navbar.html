@@ -12,8 +12,8 @@
 	<nav class="navbar navbar-expand-lg navbar-light " th:fragment="navbarFragment"
 		style="background-color:rgb(247,189,138);">
 		<div class="d-flex justify-content-between w-100">
-			<a class="navbar-brand" href="/home/index"> <img th:src="@{/imgs/icono.png}"  width="60px" height="60px"><span
-					style="margin-left: 10px;color: white;">AlzhApp</span></a>
+			<a class="navbar-brand" href="/home/index"> <img th:src="@{/imgs/icono.png}" width="60px"
+					height="60px"><span style="margin-left: 10px;color: white;">AlzhApp</span></a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
 				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -45,16 +45,36 @@
 				<li sec:authorize="isAuthenticated()" class="nav-item">
 					<a class="nav-link" th:text="${usuario}" style="white-space: nowrap; color: white;"></a>
 				</li>
-				<li sec:authorize="hasRole('ROLE_EMPRESA')" class="nav-item active">
-					<a class="nav-link editar" type="submit" href="/home/editUser"
-						style="color: white; height: 50px; width: 105px;">Editar Perfil</a>
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item active">
+					<a class="nav-link" type="submit" href="/carers"
+						style="color: white; height: 20px; width: 70px;">CARER</a>
 				</li>
-				<li sec:authorize="hasRole('ROLE_ALUMNO')" class="nav-item active">
-					<a class="nav-link editar" type="submit" href="/home/editUser"
-						style="color: white; height: 50px; width: 105px;">Editar Perfil</a>
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item active">
+					<a class="nav-link" type="submit" href="/patients"
+						style="color: white; height: 20px; width: 70px;">Patient</a>
 				</li>
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item active">
+					<a class="nav-link editar" type="submit" href="/home/editUser"
+						style="color: white; height: 20px; width: 70px;">Family unity</a>
+				</li>
+
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item active">
+					<a class="nav-link editar" type="submit" href="/home/editUser"
+						style="color: white; height: 20px; width: 70px;">Events</a>
+				</li>
+
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item active">
+					<a class="nav-link editar" type="submit" href="/home/editUser"
+						style="color: white; height: 20px; width: 100px;">Sysmptom</a>
+				</li>
+				
+				<!--				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item active">-->
+				<!--					<a class="nav-link editar" type="submit" href="/home/editUser"-->
+				<!--						style="color: white; height: 50px; width: 105px;">Medicine</a>-->
+				<!--				</li>-->
+
 				<li sec:authorize="isAuthenticated()" class="nav-item">
-					<form th:action="@{/logout}" method="post">
+					<form th:action="@{/auth/logout}" method="post">
 						<button class="btn btn-link fa fa-sign-in" type="submit"
 							style="color: white; width: 105px; margin-top: 5px; margin-left: -15px;">
 							Logout</button>
